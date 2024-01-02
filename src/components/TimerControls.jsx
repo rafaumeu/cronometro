@@ -1,5 +1,5 @@
 import React from 'react'
-
+import PropTypes from 'prop-types'
 const TimerControls = ({ onStart, onStop }) => {
   return (
     <div className='timer-controls'>
@@ -13,4 +13,5 @@ TimerControls.propTypes = {
   onStart: PropTypes.func.isRequired,
   onStop: PropTypes.func.isRequired,
 }
+
 export default TimerControls

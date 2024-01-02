@@ -1,5 +1,5 @@
 import React from 'react'
-
+import PropTypes from 'prop-types'
 const TimerDisplay = ({ time }) => {
   return <div className='timer-display'>{time}</div>
 }
