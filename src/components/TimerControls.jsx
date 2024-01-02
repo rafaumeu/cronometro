@@ -9,4 +9,8 @@ const TimerControls = ({ onStart, onStop }) => {
   )
 }
 
+TimerControls.propTypes = {
+  onStart: PropTypes.func.isRequired,
+  onStop: PropTypes.func.isRequired,
+}
 export default TimerControls
