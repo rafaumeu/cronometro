@@ -23,7 +23,14 @@ const Timer = () => {
     clearInterval(interval)
     return interval
   }
-
+  const resetTimer = () => {
+    setMiliseconds(0)
+    setTimerOn(false)
+    setLaps([])
+  }
+  const addLap = () => {
+    setLaps([...laps, formatTime()])
+  }
   useEffect(() => {
     let interval = null
     if (timerOn) {
@@ -38,10 +45,13 @@ const Timer = () => {
     <div className='timer-container'>
       <TimerDisplay time={formatTime()} />
       <TimerControls
+        timerOn={timerOn}
         onStart={() => setTimerOn(true)}
         onStop={() => setTimerOn(false)}
+        onReset={resetTimer}
+        onLap={addLap}
       />
-      <LapList />
+      <LapList laps={laps} />
     </div>
   )
 }

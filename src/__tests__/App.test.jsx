@@ -13,8 +13,6 @@ describe('Timer component', () => {
     expect(getByText('Iniciar')).toBeInTheDocument()
     expect(getByText('Zerar')).toBeInTheDocument()
     expect(getByText('Voltas:')).toBeInTheDocument()
-    expect(getByText('Volta 1: 01:05')).toBeInTheDocument()
-    expect(getByText('Volta 2: 02:05')).toBeInTheDocument()
   })
   it('initial render displays 00:00:00', () => {
     render(<Timer />)
@@ -31,7 +29,7 @@ describe('Timer component', () => {
     const displayTime = screen.getByText(/(\d{2}):(\d{2}):(\d{2})/)
     expect(displayTime).toBeInTheDocument()
 
-    const stopButton = screen.getByText('Zerar')
+    const stopButton = screen.getByText('Parar')
     fireEvent.click(stopButton)
 
     jest.advanceTimersByTime(1000)
@@ -51,7 +49,7 @@ describe('Timer component', () => {
     const displayTime = screen.getByText(/(\d{2}):(\d{2}):(\d{2})/)
     expect(displayTime).toBeInTheDocument()
 
-    const stopButton = screen.getByText('Zerar')
+    const stopButton = screen.getByText('Parar')
     fireEvent.click(stopButton)
 
     // Avançar o tempo novamente
@@ -60,5 +58,33 @@ describe('Timer component', () => {
     // Verificar se não houve mudança na exibição do tempo após pressionar o botão 'Zerar'
     const newDisplayTime = screen.queryByText(/(\d{2}):(\d{2}):(\d{2})/)
     expect(newDisplayTime).toHaveTextContent('00:01:40')
+  })
+  it('on click button Zerar timer 00:00:00', () => {
+    render(<Timer />)
+    const startButton = screen.getByText('Iniciar')
+    fireEvent.click(startButton)
+
+    jest.advanceTimersByTime(1000)
+    const displayTime = screen.getByText(/(\d{2}):(\d{2}):(\d{2})/)
+    expect(displayTime).toBeInTheDocument()
+
+    const clearButton = screen.getByText('Zerar')
+    fireEvent.click(clearButton)
+    const newDisplayTime = screen.queryByText(/(\d{2}):(\d{2}):(\d{2})/)
+    expect(newDisplayTime).toHaveTextContent('00:00:00')
+  })
+  it('on click button add Lap is added lap', () => {
+    render(<Timer />)
+    const startButton = screen.getByText('Iniciar')
+    fireEvent.click(startButton)
+
+    jest.advanceTimersByTime(1000)
+    const displayTime = screen.getByText(/(\d{2}):(\d{2}):(\d{2})/)
+    expect(displayTime).toBeInTheDocument()
+    const lapButton = screen.getByText('Volta')
+    expect(lapButton).toBeInTheDocument()
+    fireEvent.click(lapButton)
+    const lapList = screen.getByText(/Volta\s\d+:\s\d{2}:\d{2}:\d{2}/)
+    expect(lapList).toBeInTheDocument()
   })
 })
